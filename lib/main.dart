@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import 'bottom_tabbar.dart';
 import 'home_tab.dart';
+import 'notification_tab.dart';
+
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   SystemChrome.setPreferredOrientations([
+//     DeviceOrientation.portraitUp,
+//   ]);
+//   runApp(DevicePreview(
+//     builder: (context) => const MyApp(),
+//   ));
+// }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 
@@ -12,7 +30,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -20,45 +40,56 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Container(
+        padding: const EdgeInsets.only(right: 10),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.center,
             colors: [
               Color.fromRGBO(41, 50, 111, 1.0),
-              // Color.fromRGBO(95, 105, 150, 1),
-              // Color.fromRGBO(240, 245, 251, 1),
-              // Color.fromRGBO(245, 245, 245, 1),
               Colors.white,
             ],
           ),
         ),
         child: DefaultTabController(
-          length: 2,
+          length: 4,
           child: Scaffold(
+            key: _scaffoldKey,
             backgroundColor: Colors.transparent,
+            drawer: const Drawer(
+              child: Text("Welcome"),
+            ),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
-              leading: const Icon(
-                Icons.list_rounded,
-                color: Colors.white,
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                      onPressed: () {
+                        _scaffoldKey.currentState?.openDrawer();
+                      },
+                      icon: SvgPicture.asset("assets/icons/menu_icon.svg",
+                          fit: BoxFit.scaleDown));
+                },
               ),
-              title: const Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [Text("data")],
+              title: Center(
+                child: Image.asset(
+                  'assets/app_logo.png',
+                  height: kToolbarHeight,
                 ),
               ),
               actions: [
-                ElevatedButton(
-                  style: const ButtonStyle(
-                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(15))))),
-                  onPressed: () {},
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(color: Colors.black),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                  child: ElevatedButton(
+                    style: const ButtonStyle(
+                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))))),
+                    onPressed: () {},
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
               ],
@@ -66,52 +97,12 @@ class MyApp extends StatelessWidget {
             bottomNavigationBar: const BottomTabBar(),
             body: const TabBarView(children: [
               HomeTab(),
-              Text("Helo"),
+              Text("Hello"),
+              Text("Hello"),
+              NotificationTab(),
             ]),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class BottomTabBar extends StatefulWidget {
-  const BottomTabBar({
-    super.key,
-  });
-
-  @override
-  State<BottomTabBar> createState() => _BottomTabBarState();
-}
-
-class _BottomTabBarState extends State<BottomTabBar> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: const ShapeDecoration(
-        shadows: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 9,
-          ),
-          BoxShadow(color: Colors.white)
-        ],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-        ),
-      ),
-      child: const TabBar(
-        indicatorPadding: EdgeInsets.only(bottom: 8),
-        indicatorColor: Color.fromRGBO(20, 30, 115, 1),
-        tabs: [
-          Tab(
-              icon: Icon(
-            Icons.home_rounded,
-          )),
-          Tab(icon: Icon(Icons.pin_drop_outlined))
-        ],
       ),
     );
   }

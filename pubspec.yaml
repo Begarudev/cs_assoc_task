@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dropdown_search: ^5.0.6
   flutter_svg: ^2.0.9
+  device_preview: ^1.1.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -61,9 +63,20 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/tbl_line.json
+    - assets/icons/menu_icon.svg
+    - assets/app_logo.png
+    - assets/icons/
+    - assets/icons/book_tickets.png
+    - assets/icons/plan_journey.png
+    - assets/icons/nearby_metro_station.png
+    - assets/icons/smart_card_recharge.png
+    - assets/icons/calculate_fare.png
+    - assets/icons/view_transactions.png
+    - assets/announcements_bg.png
+    - assets/icons/train.svg
+    - assets/icons/home_icon_filled.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
